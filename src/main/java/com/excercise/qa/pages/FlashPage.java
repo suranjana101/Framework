@@ -28,6 +28,9 @@ public class FlashPage extends TestBase {
 
 	@FindBy(xpath = "//span[@id='exercise_status']")
 	private WebElement ResultTextArea;
+	
+	@FindBy(xpath = "//span[@id='exercise_hint']")
+	private WebElement MessageTextArea;
 
 	public java.util.List<WebElement> Checkbox(String name) {
 		return driver.findElements(By.xpath("//exercise-multiple-choice[2]//label[contains(text(),'" + name + "')]"));
@@ -48,6 +51,10 @@ public class FlashPage extends TestBase {
 
 	public String getCorrectnessText() {
 		return ResultTextArea.getText();
+	}
+	
+	public String getMessageTextArea() {
+		return MessageTextArea.getText();
 	}
 
 	/**

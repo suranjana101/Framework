@@ -55,12 +55,14 @@ public class FlashPageTest extends TestBase {
 	 */
 	@Test(dataProvider = "FlashexcerciseWithInValidData", dependsOnMethods = "ValidateFlashexcerciseWithValidData")
 	public void ValidateFlashexcerciseWithInValidData(String colorButton, String AnswerText, String RadioName,
-			String Checkbox) throws InterruptedException {
+			String Checkbox, String msgtext) throws InterruptedException {
 		logger.info("Executing validation of flash excersice page with invalid data");
 		ex.AddingFlashExcerciseDetails(colorButton, AnswerText, RadioName, Checkbox);
 		String result = ex.getCorrectnessText();
+		String messageText = ex.getMessageTextArea();
 		/* Assertion to check the correctness of the data filled */
 		Assert.assertEquals(result, "Incorrect");
+		Assert.assertEquals(messageText, msgtext);
 		logger.info("Validating the correctness of an answer by filling different set of invalid data" + result);
 	}
 
@@ -71,10 +73,12 @@ public class FlashPageTest extends TestBase {
 
 	@DataProvider(name = "FlashexcerciseWithInValidData")
 	private static Object[][] FlashexcerciseWithInValidData() {
-		return new Object[][] { { "Purple", "Hello", "Correct", "Correct" }, { "Purple", "", "Wrong", "Correct" },
-				{ "Pink", AnswerTest, "Wrong", "Correct" }, { "Pink", AnswerTest, "Correct", "Wrong" },
-				{ "Purple", AnswerTest, "Correct", "Correct" }, { "Purple", AnswerTest, "Correct", "Wrong" },
-				{ "Purple", AnswerTest, "Wrong", "Correct" }, { "", AnswerTest, "Correct", "Correct" },
+		return new Object[][] { { "Purple", "Hello", "Correct", "Correct", "" },
+				{ "Purple", "", "Wrong", "Correct", "required text empty" },
+				{ "Pink", AnswerTest, "Wrong", "Correct", "" }, { "Pink", AnswerTest, "Correct", "Wrong", "" },
+				{ "Purple", AnswerTest, "Correct", "Correct", "" }, { "Purple", AnswerTest, "Correct", "Wrong", "" },
+				{ "Purple", AnswerTest, "Wrong", "Correct", "" }, { "", AnswerTest, "Correct", "Correct", "" },
+				{ "", "", "", "", "required text empty" },
 
 		};
 	}
